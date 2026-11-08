@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mundo Motriz JC | Mantenimiento automotriz</title>
+
+  <!-- Bootstrap e iconos -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Estilos del sitio -->
+  <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Menú -->
+  <header>
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="#inicio">
+          <i class="bi bi-wrench-adjustable-circle-fill text-accent"></i> Mundo Motriz JC
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#menuPrincipal" aria-controls="menuPrincipal"
+                aria-expanded="false" aria-label="Abrir menú">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menuPrincipal">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
+            <li class="nav-item"><a class="nav-link" href="#acerca">Acerca de</a></li>
+            <li class="nav-item"><a class="nav-link" href="#servicios">Servicios</a></li>
+            <li class="nav-item"><a class="nav-link" href="solicitudes.html">Solicitudes</a></li>
+            <li class="nav-item"><a class="nav-link" id="enlaceAdmin" href="administracion.html">Administrar</a></li>
+            <li class="nav-item" id="itemLogin"><a class="btn btn-accent ms-xl-3" href="login.html">Iniciar sesión</a></li>
+            <li class="nav-item d-none ms-xl-3" id="itemUsuario">
+              <span class="navbar-text me-2" id="textoUsuario"></span>
+              <button type="button" class="btn btn-outline-light btn-sm" id="btnCerrarSesion">Cerrar sesión</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section id="administracion" class="py-5 bg-light d-none">
+      <div class="container">
+        <h2 class="section-title text-center mb-4">Panel de administración</h2>
+        <div class="row g-3 mb-4" id="resumenEstados"></div>
+        <div class="row g-2 mb-3">
+          <div class="col-md-6">
+            <input type="search" class="form-control" id="buscadorAdmin" placeholder="Buscar por cliente, placa, servicio o usuario...">
+          </div>
+          <div class="col-md-3">
+            <select class="form-select" id="filtroEstado"></select>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-striped align-middle">
+            <thead class="table-dark">
+              <tr>
+                <th>ID</th><th>Cliente</th><th>Vehículo</th><th>Servicio</th>
+                <th>Fecha y hora</th><th>Estado</th><th class="text-end">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tablaAdmin"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="bg-dark text-white-50 py-4">
+    <div class="container">
+      <div class="row gy-3">
+        <div class="col-md-4">
+          <h6 class="text-white">Mundo Motriz JC</h6>
+          <p class="mb-0">Mantenimiento automotriz de confianza.</p>
+        </div>
+        <div class="col-md-4">
+          <h6 class="text-white">Contacto</h6>
+          <p class="mb-0"><i class="bi bi-geo-alt"></i> Quito, Ecuador<br>
+          <i class="bi bi-telephone"></i> 098 863 9915<br>
+          <i class="bi bi-envelope"></i> julian.cando.777@gmail.com</p>
+        </div>
+        <div class="col-md-4">
+          <h6 class="text-white">Horario</h6>
+          <p class="mb-0">Lunes a viernes: 08:00 - 18:00<br>Sábados: 08:00 - 13:00</p>
+        </div>
+      </div>
+      <hr class="border-secondary">
+      <p class="text-center mb-0 small">&copy; 2026 Mundo Motriz JC. Práctica AD01 - Programación Web 1.</p>
+    </div>
+  </footer>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="script.js"></script>
+</body>
+</html>

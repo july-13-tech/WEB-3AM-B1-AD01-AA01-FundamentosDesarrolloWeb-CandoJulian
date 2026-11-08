@@ -287,6 +287,8 @@ function limpiarErrores() {
 }
 
 function renderTablaSolicitudes() {
+  if (!tablaSolicitudes) return;
+
   const propias = solicitudes.filter(s => sesionActual && s.usuario === sesionActual.usuario);
 
   if (propias.length === 0) {
@@ -428,6 +430,7 @@ function initFormulario() {
 /* Acceso y permisos */
 
 const CLAVE_SESION = "sesionActual";
+const CLAVE_EDICION = "solicitudEnEdicion";
 
 // Cuentas de ejemplo
 const usuarios = [
@@ -445,6 +448,7 @@ const formLogin = document.getElementById("formLogin");
 const vistaLogin = document.getElementById("vistaLogin");
 const vistaPerfil = document.getElementById("vistaPerfil");
 const datosPerfil = document.getElementById("datosPerfil");
+const nombreBienvenida = document.getElementById("nombreBienvenida");
 const credencialesPrueba = document.getElementById("credencialesPrueba");
 const avisoSinSesion = document.getElementById("avisoSinSesion");
 const itemLogin = document.getElementById("itemLogin");
@@ -486,14 +490,14 @@ function avisarSinSesion() {
     icon: "info",
     title: "Inicia sesión",
     text: "Necesitas iniciar sesión para continuar."
-  }).then(() => document.getElementById("login").scrollIntoView({ behavior: "smooth" }));
+  }).then(() => window.location.assign("login.html"));
 }
 
 function denegarAccion() {
-  Swal.fire({
+  return Swal.fire({
     icon: "error",
     title: "Acceso denegado",
-    text: "Esta operación es solo para administradores."
+    text: "No puedes ingresar a este módulo porque no eres administrador."
   });
 }
 
@@ -534,25 +538,21 @@ function iniciarSesion(evento) {
   sesionActual = encontrado;
   sessionStorage.setItem(CLAVE_SESION, encontrado.usuario);
   formLogin.reset();
-  actualizarInterfaz();
-
-  Swal.fire({
-    icon: "success",
-    title: `¡Bienvenido, ${encontrado.nombre}!`,
-    text: `Rol: ${encontrado.rol}`,
-    timer: 1800,
-    showConfirmButton: false
-  });
+  window.location.replace("solicitudes.html");
 }
 
 function cerrarSesion() {
   sesionActual = null;
   sessionStorage.removeItem(CLAVE_SESION);
-  salirModoEdicion();
-  formSolicitud.reset();
-  actualizarInterfaz();
-  document.getElementById("inicio").scrollIntoView({ behavior: "smooth" });
 
+  if (formLogin) {
+    formLogin.reset();
+  }
+  if (formSolicitud) {
+    salirModoEdicion();
+    formSolicitud.reset();
+  }
+  actualizarInterfaz();
   Swal.fire({ toast: true, position: "top-end", icon: "info", title: "Sesión cerrada", showConfirmButton: false, timer: 1800 });
 }
 
@@ -560,27 +560,30 @@ function actualizarInterfaz() {
   const logueado = sesionActual !== null;
 
   document.querySelectorAll("[data-solo-sesion]").forEach(el => el.classList.toggle("d-none", !logueado));
-  itemLogin.classList.toggle("d-none", logueado);
-  itemUsuario.classList.toggle("d-none", !logueado);
-  if (logueado) textoUsuario.textContent = `${sesionActual.nombre} (${sesionActual.rol})`;
+  if (itemLogin) itemLogin.classList.toggle("d-none", logueado);
+  if (itemUsuario) itemUsuario.classList.toggle("d-none", !logueado);
+  if (textoUsuario && logueado) textoUsuario.textContent = `${sesionActual.nombre} (${sesionActual.rol})`;
 
-  vistaLogin.classList.toggle("d-none", logueado);
-  vistaPerfil.classList.toggle("d-none", !logueado);
-  if (logueado) renderPerfil();
+  if (vistaLogin) vistaLogin.classList.toggle("d-none", logueado);
+  if (vistaPerfil) vistaPerfil.classList.toggle("d-none", !logueado);
+  if (logueado && (nombreBienvenida || datosPerfil)) renderPerfil();
 
-  avisoSinSesion.classList.toggle("d-none", logueado);
-  formSolicitud.classList.toggle("d-none", !logueado);
-  seccionMisMantenimientos.classList.toggle("d-none", !logueado);
+  if (avisoSinSesion) avisoSinSesion.classList.toggle("d-none", logueado);
+  if (formSolicitud) formSolicitud.classList.toggle("d-none", !logueado);
+  if (seccionMisMantenimientos) seccionMisMantenimientos.classList.toggle("d-none", !logueado);
+  if (seccionAdmin) seccionAdmin.classList.toggle("d-none", !esAdmin());
+  if (grupoClienteDestino) grupoClienteDestino.classList.toggle("d-none", !esAdmin());
+  document.querySelectorAll("[data-admin]").forEach(el => el.classList.toggle("d-none", !esAdmin()));
 
-  seccionAdmin.classList.toggle("d-none", !esAdmin());
-  grupoClienteDestino.classList.toggle("d-none", !esAdmin());
-
-  prepararFormulario();
+  if (formSolicitud && logueado) prepararFormulario();
   refrescarVistas();
 }
 
 function renderPerfil() {
   const u = sesionActual;
+  if (nombreBienvenida) nombreBienvenida.textContent = u.nombre;
+  if (!datosPerfil) return;
+
   const filas = [
     ["Nombre", u.nombre],
     ["Usuario", u.usuario],
@@ -604,7 +607,7 @@ function rellenarDatosCliente(usuario) {
 }
 
 function prepararFormulario() {
-  if (!sesionActual) return;
+  if (!sesionActual || !formSolicitud) return;
   const campos = formSolicitud.elements;
 
   if (esAdmin()) {
@@ -623,12 +626,14 @@ function prepararFormulario() {
 }
 
 function refrescarVistas() {
-  renderTablaSolicitudes();
-  renderResumen();
-  renderTablaAdmin();
+  if (tablaSolicitudes) renderTablaSolicitudes();
+  if (resumenEstados) renderResumen();
+  if (tablaAdmin) renderTablaAdmin();
 }
 
 function renderResumen() {
+  if (!resumenEstados) return;
+
   if (!esAdmin()) {
     resumenEstados.innerHTML = "";
     return;
@@ -648,6 +653,8 @@ function renderResumen() {
 }
 
 function renderTablaAdmin() {
+  if (!tablaAdmin || !buscadorAdmin || !filtroEstado) return;
+
   if (!esAdmin()) {
     tablaAdmin.innerHTML = "";
     return;
@@ -743,6 +750,11 @@ function editarSolicitud(id) {
 
   const s = solicitudes.find(x => x.id === id);
   if (!s) return;
+  if (!formSolicitud) {
+    sessionStorage.setItem(CLAVE_EDICION, String(id));
+    window.location.assign("solicitudes.html");
+    return;
+  }
 
   const campos = formSolicitud.elements;
   idEnEdicion = id;
@@ -818,8 +830,14 @@ function controlarHash() {
   }
 }
 
-function initSesion() {
-  credencialesPrueba.innerHTML = usuarios.map(u => `
+function initLogin() {
+  if (!formLogin) return;
+  if (sesionActual) {
+    window.location.replace("solicitudes.html");
+    return;
+  }
+
+  if (credencialesPrueba) credencialesPrueba.innerHTML = usuarios.map(u => `
     <tr>
       <td>${u.usuario}</td>
       <td>${u.password}</td>
@@ -827,52 +845,88 @@ function initSesion() {
       <td>${u.activo ? "Activa" : "Deshabilitada"}</td>
     </tr>`).join("");
 
-  filtroEstado.innerHTML =
-    `<option value="">Todos los estados</option>` +
-    ESTADOS.map(e => `<option value="${e}">${e}</option>`).join("");
-
   formLogin.addEventListener("submit", iniciarSesion);
-  btnCerrarSesion.addEventListener("click", cerrarSesion);
-  btnCerrarSesionPerfil.addEventListener("click", cerrarSesion);
+  if (btnCerrarSesionPerfil) btnCerrarSesionPerfil.addEventListener("click", cerrarSesion);
+  actualizarInterfaz();
+}
 
-  enlaceAdmin.addEventListener("click", evento => {
-    evento.preventDefault();
-    if (verificarAccesoAdmin()) {
-      seccionAdmin.scrollIntoView({ behavior: "smooth" });
-    }
-  });
-  window.addEventListener("hashchange", controlarHash);
+function initSolicitudes() {
+  if (!formSolicitud) return;
+  if (!sesionActual) {
+    window.location.replace("login.html");
+    return;
+  }
 
-  tablaAdmin.addEventListener("click", evento => {
-    const boton = evento.target.closest("button[data-id]");
-    if (!boton) return;
-    const id = Number(boton.dataset.id);
-    if (boton.classList.contains("btn-editar")) editarSolicitud(id);
-    if (boton.classList.contains("btn-eliminar")) eliminarSolicitud(id);
-  });
-  tablaAdmin.addEventListener("change", evento => {
-    if (evento.target.classList.contains("select-estado")) {
-      cambiarEstado(Number(evento.target.dataset.id), evento.target.value);
-    }
-  });
-
-  buscadorAdmin.addEventListener("input", renderTablaAdmin);
-  filtroEstado.addEventListener("change", renderTablaAdmin);
-
-  btnCancelarEdicion.addEventListener("click", cancelarEdicion);
+  initFormulario();
+  if (btnCancelarEdicion) btnCancelarEdicion.addEventListener("click", cancelarEdicion);
+  initPanelAdmin();
 
   formSolicitud.elements["clienteDestino"].addEventListener("change", evento => {
     rellenarDatosCliente(usuarios.find(u => u.usuario === evento.target.value));
   });
 
   actualizarInterfaz();
-  controlarHash();
+  const idPendiente = Number(sessionStorage.getItem(CLAVE_EDICION));
+  if (idPendiente) {
+    sessionStorage.removeItem(CLAVE_EDICION);
+    editarSolicitud(idPendiente);
+  }
+}
+
+function initPanelAdmin() {
+  if (filtroEstado) {
+    filtroEstado.innerHTML =
+      `<option value="">Todos los estados</option>` +
+      ESTADOS.map(e => `<option value="${e}">${e}</option>`).join("");
+    filtroEstado.addEventListener("change", renderTablaAdmin);
+  }
+  if (buscadorAdmin) buscadorAdmin.addEventListener("input", renderTablaAdmin);
+
+  if (tablaAdmin) {
+    tablaAdmin.addEventListener("click", evento => {
+      const boton = evento.target.closest("button[data-id]");
+      if (!boton) return;
+      const id = Number(boton.dataset.id);
+      if (boton.classList.contains("btn-editar")) editarSolicitud(id);
+      if (boton.classList.contains("btn-eliminar")) eliminarSolicitud(id);
+    });
+    tablaAdmin.addEventListener("change", evento => {
+      if (evento.target.classList.contains("select-estado")) {
+        cambiarEstado(Number(evento.target.dataset.id), evento.target.value);
+      }
+    });
+  }
+}
+
+function initAdministracion() {
+  if (!seccionAdmin || formSolicitud) return;
+  if (!sesionActual) {
+    avisarSinSesion();
+    return;
+  }
+  if (!esAdmin()) {
+    denegarAccion().then(() => window.location.replace("index.html"));
+    return;
+  }
+
+  initPanelAdmin();
+  actualizarInterfaz();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  renderFiltros();
-  renderServicios(servicios);
-  animarContadores();
-  initFormulario();
-  initSesion();
+  if (btnCerrarSesion) btnCerrarSesion.addEventListener("click", cerrarSesion);
+  if (enlaceAdmin) window.addEventListener("hashchange", controlarHash);
+
+  if (contenedorCatalogo && contenedorFiltros) {
+    renderFiltros();
+    renderServicios(servicios);
+    animarContadores();
+  }
+
+  if (itemLogin && !formLogin && !formSolicitud) actualizarInterfaz();
+
+  initLogin();
+  initSolicitudes();
+  initAdministracion();
+  controlarHash();
 });
