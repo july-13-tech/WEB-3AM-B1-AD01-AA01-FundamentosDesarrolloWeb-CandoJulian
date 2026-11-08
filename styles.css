@@ -1,0 +1,178 @@
+/* Colores */
+:root {
+  --color-acento: #ff6b1a;
+  --color-acento-oscuro: #e0560a;
+  --color-oscuro: #212529;
+}
+
+/* Desplazamiento suave */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Evita que el menú tape los títulos */
+section,
+#mis-mantenimientos {
+  scroll-margin-top: 70px;
+}
+
+body {
+  padding-top: 56px;
+}
+
+/* Botones y acentos */
+.text-accent {
+  color: var(--color-acento);
+}
+
+.btn-accent {
+  background-color: var(--color-acento);
+  border-color: var(--color-acento);
+  color: #fff;
+}
+.btn-accent:hover {
+  background-color: var(--color-acento-oscuro);
+  border-color: var(--color-acento-oscuro);
+  color: #fff;
+}
+
+/* Carrusel */
+.hero-carousel {
+  color: #fff;
+  background: #202a30;
+}
+.hero-slide {
+  position: relative;
+  display: flex;
+  min-height: min(78vh, 700px);
+  align-items: center;
+  background-position: center;
+  background-size: cover;
+  isolation: isolate;
+}
+.hero-slide::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  content: "";
+  background: linear-gradient(90deg, rgba(13, 23, 28, .9), rgba(13, 23, 28, .56) 52%, rgba(13, 23, 28, .12));
+}
+.hero-image-1 {
+  background-image: url("mecanica.png"), linear-gradient(120deg, #25363b, #68756e);
+}
+.hero-image-2 {
+  background-image: url("mantenimiento.png"), linear-gradient(120deg, #293a40, #776a51);
+}
+.hero-image-3 {
+  background-image: url("trabajadores.png"), linear-gradient(120deg, #25363b, #526d68);
+}
+.hero-copy {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+.hero-copy h1,
+.hero-copy h2 {
+  max-width: 760px;
+  margin-bottom: 1rem;
+  font-size: clamp(2.4rem, 5vw, 4.5rem);
+  font-weight: 750;
+  line-height: 1.05;
+}
+.hero-copy p:not(.hero-eyebrow) {
+  max-width: 560px;
+  margin-bottom: 1.75rem;
+  font-size: 1.15rem;
+}
+.hero-eyebrow {
+  color: #ffc18f;
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.hero-carousel .carousel-indicators {
+  justify-content: flex-start;
+  margin-left: max(calc((100vw - 1140px) / 2), 1.5rem);
+}
+.hero-carousel .carousel-indicators [data-bs-target] {
+  width: 34px;
+  height: 4px;
+  border: 0;
+}
+.hero-carousel .carousel-control-prev,
+.hero-carousel .carousel-control-next {
+  width: 8%;
+}
+
+@media (max-width: 575.98px) {
+  .hero-slide {
+    min-height: 72vh;
+  }
+  .hero-copy {
+    padding-top: 4rem;
+    padding-bottom: 5rem;
+  }
+  .hero-copy h1,
+  .hero-copy h2 {
+    font-size: 2.5rem;
+  }
+  .hero-carousel .carousel-control-prev,
+  .hero-carousel .carousel-control-next {
+    display: none;
+  }
+}
+
+/* Títulos de sección */
+.section-title {
+  position: relative;
+  padding-bottom: .75rem;
+}
+.section-title::after {
+  content: "";
+  display: block;
+  width: 70px;
+  height: 4px;
+  margin: .5rem auto 0;
+  background: var(--color-acento);
+  border-radius: 2px;
+}
+
+/* Datos destacados */
+.dato {
+  padding: 1rem .5rem;
+  border-radius: .75rem;
+  background: #f8f9fa;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .08);
+}
+.dato .numero {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-acento);
+}
+
+/* Servicios */
+.card-servicio {
+  transition: transform .2s ease, box-shadow .2s ease;
+  border: 0;
+}
+.card-servicio:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 .75rem 1.5rem rgba(0, 0, 0, .15) !important;
+}
+.card-servicio .icono {
+  font-size: 2.5rem;
+  color: var(--color-acento);
+}
+
+/* Filtro seleccionado */
+.btn-filtro.active {
+  background-color: var(--color-acento);
+  border-color: var(--color-acento);
+  color: #fff;
+}
+
+/* Administración */
+.select-estado {
+  min-width: 140px;
+}

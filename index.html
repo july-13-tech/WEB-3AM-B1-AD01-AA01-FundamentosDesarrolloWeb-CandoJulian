@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mundo Motriz JC | Mantenimiento automotriz</title>
+
+  <!-- Bootstrap e iconos -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Estilos del sitio -->
+  <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Menú -->
+  <header>
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="#inicio">
+          <i class="bi bi-wrench-adjustable-circle-fill text-accent"></i> Mundo Motriz JC
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#menuPrincipal" aria-controls="menuPrincipal"
+                aria-expanded="false" aria-label="Abrir menú">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menuPrincipal">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
+            <li class="nav-item"><a class="nav-link" href="#acerca">Acerca de</a></li>
+            <li class="nav-item"><a class="nav-link" href="#servicios">Servicios</a></li>
+            <li class="nav-item"><a class="nav-link" href="#solicitud">Solicitar mantenimiento</a></li>
+            <!-- Enlaces para usuarios con sesión -->
+            <li class="nav-item d-none" data-solo-sesion><a class="nav-link" href="#mis-mantenimientos">Mis mantenimientos</a></li>
+            <li class="nav-item d-none" data-solo-sesion><a class="nav-link" href="#administracion" id="enlaceAdmin">Administración</a></li>
+            <li class="nav-item" id="itemLogin"><a class="btn btn-accent ms-xl-3" href="#login">Iniciar sesión</a></li>
+            <li class="nav-item d-none ms-xl-3" id="itemUsuario">
+              <span class="navbar-text me-2" id="textoUsuario"></span>
+              <button type="button" class="btn btn-outline-light btn-sm" id="btnCerrarSesion">Cerrar sesión</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    
+    <!-- Inicio -->
+    <section id="inicio" aria-label="Servicios destacados">
+      <div id="carruselInicio" class="carousel slide carousel-fade hero-carousel" data-bs-ride="carousel" data-bs-interval="5500">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carruselInicio" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Diapositiva 1"></button>
+          <button type="button" data-bs-target="#carruselInicio" data-bs-slide-to="1" aria-label="Diapositiva 2"></button>
+          <button type="button" data-bs-target="#carruselInicio" data-bs-slide-to="2" aria-label="Diapositiva 3"></button>
+        </div>
+        <div class="carousel-inner">
+          <!-- Cambia las rutas en styles.css por tus fotos. -->
+          <div class="carousel-item active">
+            <div class="hero-slide hero-image-1" role="img" aria-label="Espacio para una imagen del taller">
+              <div class="container hero-copy">
+                <p class="hero-eyebrow">AutoTaller Cordillera</p>
+                <h1>Tu vehículo, en buenas manos.</h1>
+                <p>Mantenimiento preventivo y correctivo con atención confiable.</p>
+                <a href="#servicios" class="btn btn-accent btn-lg">Conoce nuestros servicios</a>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="hero-slide hero-image-2" role="img" aria-label="Espacio para una imagen de mantenimiento automotriz">
+              <div class="container hero-copy">
+                <p class="hero-eyebrow">Cuidado preventivo</p>
+                <h2>Mantenimiento a tiempo, viajes tranquilos.</h2>
+                <p>Revisión de motor, frenos, suspensión y más.</p>
+                <a href="#solicitud" class="btn btn-accent btn-lg">Agenda una revisión</a>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="hero-slide hero-image-3" role="img" aria-label="Espacio para una imagen de técnicos automotrices">
+              <div class="container hero-copy">
+                <p class="hero-eyebrow">Diagnóstico especializado</p>
+                <h2>Atención clara para cada necesidad.</h2>
+                <p>Cuéntanos qué necesita tu auto y coordinamos tu visita.</p>
+                <a href="#solicitud" class="btn btn-accent btn-lg">Solicitar mantenimiento</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carruselInicio" data-bs-slide="prev" aria-label="Diapositiva anterior">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carruselInicio" data-bs-slide="next" aria-label="Diapositiva siguiente">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+    </section>
+
+    <section id="acerca" class="py-5">
+      <div class="container">
+        <h2 class="section-title text-center mb-4">Acerca de nosotros</h2>
+        <div class="row align-items-center g-4">
+          <div class="col-md-6">
+            <p>
+              Mundo Motriz JC es un taller mecánico con más de 15 años de experiencia
+              cuidando vehículos de todas las marcas. Nuestro objetivo es que conduzcas con
+              seguridad y confianza.
+            </p>
+            <p><strong>Misión:</strong> ofrecer un servicio honesto, rápido y de calidad.</p>
+            <p><strong>Visión:</strong> ser el taller de referencia de la región.</p>
+          </div>
+          <div class="col-md-6">
+            <div class="row text-center g-3">
+              <div class="col-4"><div class="dato"><span class="numero" data-meta="15">0</span><small>Años de experiencia</small></div></div>
+              <div class="col-4"><div class="dato"><span class="numero" data-meta="2500">0</span><small>Clientes atendidos</small></div></div>
+              <div class="col-4"><div class="dato"><span class="numero" data-meta="12">0</span><small>Técnicos</small></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Servicios -->
+    <section id="servicios" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="section-title text-center mb-4">Catálogo de servicios</h2>
+        <div class="text-center mb-4" id="filtros"></div>
+        <div class="row g-4" id="catalogo"></div>
+      </div>
+    </section>
+
+    <!-- Solicitud de mantenimiento -->
+    <section id="solicitud" class="py-5">
+      <div class="container">
+        <h2 class="section-title text-center mb-4">Solicitud de mantenimiento</h2>
+
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <!-- Aviso para quienes no han iniciado sesión -->
+            <div class="alert alert-info text-center" id="avisoSinSesion">
+              <i class="bi bi-lock-fill"></i> Para registrar una solicitud debes
+              <a href="#login" class="alert-link">iniciar sesión</a>.
+            </div>
+
+            <form id="formSolicitud" class="card shadow-sm p-4 d-none" novalidate>
+
+              <div class="alert alert-warning d-none" id="avisoEdicion">
+                <i class="bi bi-pencil-square"></i> Editando la solicitud N.º <strong id="idEdicionTexto"></strong>.
+              </div>
+
+              <h5 class="mb-3"><i class="bi bi-person-fill text-accent"></i> Datos del cliente</h5>
+
+              <!-- El administrador puede elegir al cliente -->
+              <div class="mb-3 d-none" id="grupoClienteDestino">
+                <label for="clienteDestino" class="form-label">Registrar a nombre de *</label>
+                <select class="form-select" id="clienteDestino" name="clienteDestino"></select>
+                <div class="invalid-feedback" data-error-for="clienteDestino"></div>
+              </div>
+              <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                  <label for="nombre" class="form-label">Nombre completo *</label>
+                  <input type="text" class="form-control" id="nombre" name="nombre" maxlength="60" placeholder="Ej: Juan Pérez" required>
+                  <div class="invalid-feedback" data-error-for="nombre"></div>
+                </div>
+                <div class="col-md-6">
+                  <label for="email" class="form-label">Correo electrónico *</label>
+                  <input type="email" class="form-control" id="email" name="email" placeholder="correo@ejemplo.com" required>
+                  <div class="invalid-feedback" data-error-for="email"></div>
+                </div>
+                <div class="col-md-6">
+                  <label for="telefono" class="form-label">Teléfono *</label>
+                  <input type="tel" class="form-control" id="telefono" name="telefono" maxlength="10" inputmode="numeric" placeholder="0991234567" required>
+                  <div class="invalid-feedback" data-error-for="telefono"></div>
+                </div>
+              </div>
+
+              <h5 class="mb-3"><i class="bi bi-car-front-fill text-accent"></i> Datos del automóvil</h5>
+              <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                  <label for="placa" class="form-label">Placa *</label>
+                  <input type="text" class="form-control text-uppercase" id="placa" name="placa" maxlength="8" placeholder="ABC-1234" autocomplete="off" required>
+                  <div class="invalid-feedback" data-error-for="placa"></div>
+                </div>
+                <div class="col-md-4">
+                  <label for="marca" class="form-label">Marca *</label>
+                  <input type="text" class="form-control" id="marca" name="marca" maxlength="30" placeholder="Chevrolet" required>
+                  <div class="invalid-feedback" data-error-for="marca"></div>
+                </div>
+                <div class="col-md-4">
+                  <label for="modelo" class="form-label">Modelo *</label>
+                  <input type="text" class="form-control" id="modelo" name="modelo" maxlength="30" placeholder="Sail" required>
+                  <div class="invalid-feedback" data-error-for="modelo"></div>
+                </div>
+                <div class="col-md-6">
+                  <label for="anio" class="form-label">Año *</label>
+                  <input type="number" class="form-control" id="anio" name="anio" min="1980" step="1" placeholder="2018" required>
+                  <div class="invalid-feedback" data-error-for="anio"></div>
+                </div>
+                <div class="col-md-6">
+                  <label for="kilometraje" class="form-label">Kilometraje *</label>
+                  <input type="number" class="form-control" id="kilometraje" name="kilometraje" min="0" max="999999" step="1" placeholder="45000" required>
+                  <div class="invalid-feedback" data-error-for="kilometraje"></div>
+                </div>
+              </div>
+
+              <h5 class="mb-3"><i class="bi bi-calendar-check-fill text-accent"></i> Servicio y horario</h5>
+              <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                  <label for="servicio" class="form-label">Tipo de servicio *</label>
+                  <select class="form-select" id="servicio" name="servicio" required></select>
+                  <div class="invalid-feedback" data-error-for="servicio"></div>
+                </div>
+                <div class="col-md-3">
+                  <label for="fecha" class="form-label">Fecha *</label>
+                  <input type="date" class="form-control" id="fecha" name="fecha" required>
+                  <div class="invalid-feedback" data-error-for="fecha"></div>
+                </div>
+                <div class="col-md-3">
+                  <label for="hora" class="form-label">Hora *</label>
+                  <input type="time" class="form-control" id="hora" name="hora" required>
+                  <div class="invalid-feedback" data-error-for="hora"></div>
+                </div>
+
+                <div class="col-md-6">
+                  <span class="form-label d-block">Prioridad *</span>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="prioridad" id="prioNormal" value="Normal">
+                    <label class="form-check-label" for="prioNormal">Normal</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="prioridad" id="prioUrgente" value="Urgente">
+                    <label class="form-check-label" for="prioUrgente">Urgente</label>
+                  </div>
+                  <div class="invalid-feedback" data-error-for="prioridad"></div>
+                </div>
+
+                <div class="col-md-6">
+                  <span class="form-label d-block">Servicios adicionales (opcional)</span>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="extras" id="extraLavado" value="Lavado">
+                    <label class="form-check-label" for="extraLavado">Lavado</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="extras" id="extraNiveles" value="Revisión de niveles">
+                    <label class="form-check-label" for="extraNiveles">Revisión de niveles</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="extras" id="extraLlantas" value="Revisión de llantas">
+                    <label class="form-check-label" for="extraLlantas">Revisión de llantas</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="observaciones" class="form-label">Observaciones (opcional)</label>
+                <textarea class="form-control" id="observaciones" name="observaciones" rows="3" maxlength="300"
+                          placeholder="Describe el problema o lo que necesitas revisar..."></textarea>
+                <div class="invalid-feedback" data-error-for="observaciones"></div>
+              </div>
+
+              <div class="form-check mb-4">
+                <input class="form-check-input" type="checkbox" name="terminos" id="terminos">
+                <label class="form-check-label" for="terminos">
+                  Confirmo que los datos ingresados son correctos *
+                </label>
+                <div class="invalid-feedback" data-error-for="terminos"></div>
+              </div>
+
+              <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-accent" id="btnGuardar"><i class="bi bi-send-fill"></i> Registrar solicitud</button>
+                <button type="reset" class="btn btn-outline-secondary">Limpiar</button>
+                <button type="button" class="btn btn-outline-danger d-none" id="btnCancelarEdicion">Cancelar edición</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Solicitudes del usuario -->
+        <div class="row justify-content-center mt-5 d-none" id="mis-mantenimientos">
+          <div class="col-lg-10">
+            <h4>Mis mantenimientos</h4>
+            <p class="text-muted small">Aquí aparecen únicamente las solicitudes registradas a tu nombre.</p>
+            <div class="table-responsive">
+              <table class="table table-striped align-middle">
+                <thead class="table-dark">
+                  <tr>
+                    <th>ID</th><th>Cliente</th><th>Placa</th><th>Servicio</th>
+                    <th>Fecha</th><th>Hora</th><th>Prioridad</th><th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody id="tablaSolicitudes"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Acceso y perfil -->
+    <section id="login" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="section-title text-center mb-4">Acceso al sistema</h2>
+        <div class="row justify-content-center">
+          <div class="col-md-8 col-lg-6">
+
+            <div id="vistaLogin">
+              <form id="formLogin" class="card shadow-sm p-4" novalidate>
+                <div class="mb-3">
+                  <label for="loginUsuario" class="form-label">Usuario</label>
+                  <input type="text" class="form-control" id="loginUsuario" autocomplete="username" placeholder="Ej: maria" required>
+                </div>
+                <div class="mb-3">
+                  <label for="loginPassword" class="form-label">Contraseña</label>
+                  <input type="password" class="form-control" id="loginPassword" autocomplete="current-password" required>
+                </div>
+                <button type="submit" class="btn btn-accent w-100"><i class="bi bi-box-arrow-in-right"></i> Ingresar</button>
+              </form>
+
+              <!-- Cuentas para probar el sistema -->
+              <div class="card mt-3">
+                <div class="card-body">
+                  <h6 class="card-title"><i class="bi bi-info-circle text-accent"></i> Credenciales de prueba</h6>
+                  <div class="table-responsive">
+                    <table class="table table-sm mb-0 small">
+                      <thead><tr><th>Usuario</th><th>Contraseña</th><th>Rol</th><th>Cuenta</th></tr></thead>
+                      <tbody id="credencialesPrueba"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="vistaPerfil" class="d-none">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <h5 class="card-title mb-3"><i class="bi bi-person-circle text-accent"></i> Mi perfil</h5>
+                  <dl class="row mb-0" id="datosPerfil"></dl>
+                  <button type="button" class="btn btn-outline-dark mt-3" id="btnCerrarSesionPerfil">
+                    <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Panel de administración, solo para el administrador -->
+    <section id="administracion" class="py-5 d-none">
+      <div class="container">
+        <h2 class="section-title text-center mb-4">Panel de administración</h2>
+
+        <div class="row g-3 mb-4" id="resumenEstados"></div>
+
+        <div class="row g-2 mb-3">
+          <div class="col-md-6">
+            <input type="search" class="form-control" id="buscadorAdmin" placeholder="Buscar por cliente, placa, servicio o usuario...">
+          </div>
+          <div class="col-md-3">
+            <select class="form-select" id="filtroEstado"></select>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-striped align-middle">
+            <thead class="table-dark">
+              <tr>
+                <th>ID</th><th>Cliente</th><th>Vehículo</th><th>Servicio</th>
+                <th>Fecha y hora</th><th>Estado</th><th class="text-end">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tablaAdmin"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-dark text-white-50 py-4">
+    <div class="container">
+      <div class="row gy-3">
+        <div class="col-md-4">
+          <h6 class="text-white">Mundo Motriz JC</h6>
+          <p class="mb-0">Mantenimiento automotriz de confianza.</p>
+        </div>
+        <div class="col-md-4">
+          <h6 class="text-white">Contacto</h6>
+          <p class="mb-0"><i class="bi bi-geo-alt"></i> Quito, Ecuador<br>
+          <i class="bi bi-telephone"></i> 098 863 9915<br>
+          <i class="bi bi-envelope"></i> julian.cando.777@gmail.com</p>
+        </div>
+        <div class="col-md-4">
+          <h6 class="text-white">Horario</h6>
+          <p class="mb-0">Lunes a viernes: 08:00 - 18:00<br>Sábados: 08:00 - 13:00</p>
+        </div>
+      </div>
+      <hr class="border-secondary">
+      <p class="text-center mb-0 small">&copy; 2026 Mundo Motriz JC. Práctica AD01 - Programación Web 1.</p>
+    </div>
+  </footer>
+
+  <!-- Librerías y funciones del sitio -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="script.js"></script>
+</body>
+</html>
