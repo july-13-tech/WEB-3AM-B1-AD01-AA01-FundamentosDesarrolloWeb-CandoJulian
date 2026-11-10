@@ -1,6 +1,3 @@
-/* Catálogo de servicios */
-
-
 const servicios = [
   { id: 1, nombre: "Cambio de aceite",       categoria: "Motor",       descripcion: "Aceite sintético y cambio de filtro.",          precio: 35,  icono: "bi-droplet-half" },
   { id: 2, nombre: "Alineación y balanceo",  categoria: "Suspensión",  descripcion: "Mejora la estabilidad y el desgaste de llantas.", precio: 25,  icono: "bi-record-circle" },
@@ -538,7 +535,11 @@ function iniciarSesion(evento) {
   sesionActual = encontrado;
   sessionStorage.setItem(CLAVE_SESION, encontrado.usuario);
   formLogin.reset();
-  window.location.replace("solicitudes.html");
+  Swal.fire({
+    icon: "success",
+    title: `¡Bienvenido, ${encontrado.nombre}!`,
+    text: "Has iniciado sesión correctamente."
+  }).then(() => window.location.replace("solicitudes.html"));
 }
 
 function cerrarSesion() {
